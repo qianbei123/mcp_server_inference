@@ -291,7 +291,7 @@ wheels = [
 ]
 
 [[package]]
-name = "mcp-dev"
+name = "mcp-server-mol-inference"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
