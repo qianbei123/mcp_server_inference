@@ -1,0 +1,20 @@
+[project]
+name = "mcp_server_mol_inference"
+version = "0.1.0"
+description = "mcp server for molecule property prediction"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp>=2.9.2",
+]
+
+[tool.ruff]
+# uncheck line_length.
+ignore = ["E501", "E401", "F401", "E402" ]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["E402", "F401", "E401"]
+
+[tool.uv]
+index-url = "https://mirrors.ivolces.com/pypi/simple"
+extra-index-url = [ "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple", "https://pypi.org/simple"]
