@@ -26,7 +26,7 @@ jobs:
       - name: Login to Private Registry
         uses: docker/login-action@v2
         with:
-          registry: dp-ve-registry-cn-beijing.cr.volces.com
+          registry: registry.dp.tech
           username: ${{ secrets.DOCKER_USERNAME_DP }}
           password: ${{ secrets.DOCKER_PASSWORD_DP }}
 
@@ -62,5 +62,5 @@ jobs:
           push: true
           #  使用动态生成的日期作为标签的一部分，同时指定了私有registry的路径
           tags: |
-            dp-ve-registry-cn-beijing.cr.volces.com/dplc/mol_infer_mcp_server:${{ env.DATE }}-${{ env.SHORT_SHA }}
-            dp-ve-registry-cn-beijing.cr.volces.com/dplc/mol_infer_mcp_server:latest
+            registry.dp.tech/mol_infer_mcp_server:${{ env.DATE }}-${{ env.SHORT_SHA }}
+            registry.dp.tech/mol_infer_mcp_server:latest
