@@ -1,16 +1,152 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,model_validator
 from typing import Union, Optional, Generic, TypeVar, Literal
+import re
 
 
 class AdmetValueItem(BaseModel):
-    """admet value item"""
-
-    color: Literal["g", "r", "y", None]  # green, red, yellow, None
+    color: Union[Literal["g", "r", "y"], None] # green, red, yellow, None
     value: Union[float, bool]
 
 
 class AdmetInnerData(BaseModel):
-    """Detail decription for Admet result items:
+    AR: AdmetValueItem
+    ER: AdmetValueItem
+    GR: AdmetValueItem
+    MW: AdmetValueItem
+    TR: AdmetValueItem
+    ARE: AdmetValueItem
+    AhR: AdmetValueItem
+    CLr: AdmetValueItem
+    HIA: AdmetValueItem
+    HSE: AdmetValueItem
+    MMP: AdmetValueItem
+    P53: AdmetValueItem
+    nha: AdmetValueItem
+    nhd: AdmetValueItem
+    Carc: AdmetValueItem
+    HIA2: AdmetValueItem
+    ames: AdmetValueItem
+    dili: AdmetValueItem
+    herg: AdmetValueItem
+    logP: AdmetValueItem
+    nrot: AdmetValueItem
+    tpsa: AdmetValueItem
+    ATAD5: AdmetValueItem
+    HIA_c: AdmetValueItem
+    n_het: AdmetValueItem
+    nring: AdmetValueItem
+    AR_LBD: AdmetValueItem
+    ER_LBD: AdmetValueItem
+    hERG_1: AdmetValueItem
+    nRigid: AdmetValueItem
+    BCRP_dp: AdmetValueItem
+    hERG_10: AdmetValueItem
+    hERG_30: AdmetValueItem
+    hia_hou: AdmetValueItem
+    ppbr_az: AdmetValueItem
+    BSEP_aid: AdmetValueItem
+    HLM_chen: AdmetValueItem
+    OCT1_aid: AdmetValueItem
+    RLM_chen: AdmetValueItem
+    VDss_dog: AdmetValueItem
+    VDss_rat: AdmetValueItem
+    ld50_zhu: AdmetValueItem
+    max_ring: AdmetValueItem
+    AOT_C_wym: AdmetValueItem
+    Aromatase: AdmetValueItem
+    Half_life: AdmetValueItem
+    OCT2_kido: AdmetValueItem
+    Pgp_human: AdmetValueItem
+    egan_rule: AdmetValueItem
+    Papp_Caco2: AdmetValueItem
+    VDss_human: AdmetValueItem
+    caco2_wang: AdmetValueItem
+    ghose_rule: AdmetValueItem
+    veber_rule: AdmetValueItem
+    Flexibility: AdmetValueItem
+    LogD_pH_7_4: AdmetValueItem
+    OATP1B1_aid: AdmetValueItem
+    OATP1B3_aid: AdmetValueItem
+    OATP2B1_aid: AdmetValueItem
+    VDss_monkey: AdmetValueItem
+    bbb_martins: AdmetValueItem
+    CL_total_dog: AdmetValueItem
+    CL_total_rat: AdmetValueItem
+    Micronucleus: AdmetValueItem
+    cyp2c9_veith: AdmetValueItem
+    cyp2d6_veith: AdmetValueItem
+    cyp3a4_veith: AdmetValueItem
+    hERG_binding: AdmetValueItem
+    total_charge: AdmetValueItem
+    Eye_Corrosion: AdmetValueItem
+    Neurotoxicity: AdmetValueItem
+    eye_corrosion: AdmetValueItem
+    lipinski_rule: AdmetValueItem
+    thermo_logSaq: AdmetValueItem
+    vdss_lombardo: AdmetValueItem
+    CL_total_human: AdmetValueItem
+    Nephrotoxicity: AdmetValueItem
+    eye_irritation: AdmetValueItem
+    nStereoCenters: AdmetValueItem
+    skin_corrosion: AdmetValueItem
+    CL_total_monkey: AdmetValueItem
+    half_life_obach: AdmetValueItem
+    ocular_toxicity: AdmetValueItem
+    pgp_broccatelli: AdmetValueItem
+    skin_irritation: AdmetValueItem
+    CL_microsome_rat: AdmetValueItem
+    CYP2C8_inhibition: AdmetValueItem
+    CYP2C9_inhibition: AdmetValueItem
+    CYP2D6_inhibition: AdmetValueItem
+    CYP3A4_inhibition: AdmetValueItem
+    CL_microsome_human: AdmetValueItem
+    CL_microsome_mouse: AdmetValueItem
+    bioavailability_ma: AdmetValueItem
+    skin_sensitization: AdmetValueItem
+    solubility_aqsoldb: AdmetValueItem
+    Carcinogenicity_Rat: AdmetValueItem
+    Respiratory_toxicity: AdmetValueItem
+    ugts_substance_huang: AdmetValueItem
+    Mouse_carcinogenicity: AdmetValueItem
+    Reproductive_toxicity: AdmetValueItem
+    Mitochondrial_toxicity: AdmetValueItem
+    clearance_microsome_az: AdmetValueItem
+    clearance_hepatocyte_az: AdmetValueItem
+    Carcinogenicity_Rat_TD50: AdmetValueItem
+    lipophilicity_astrazeneca: AdmetValueItem
+    Carcinogenicity_Mouse_TD50: AdmetValueItem
+    Dog_fraction_unbound_plasma: AdmetValueItem
+    Rat_fraction_unbound_plasma: AdmetValueItem
+    Human_fraction_unbound_plasma: AdmetValueItem
+    Monkey_fraction_unbound_plasma: AdmetValueItem
+    cyp2c9_substrate_carbonmangels: AdmetValueItem
+    cyp2d6_substrate_carbonmangels: AdmetValueItem
+    cyp3a4_substrate_carbonmangels: AdmetValueItem
+
+    @model_validator(mode="before")
+    def pre_process(cls, value):
+        if isinstance(value, dict):
+            # 创建一个新字典来存储处理后的键值对
+            processed = {}
+            for key, val in value.items():
+                new_key = re.sub(r'[ .()-]', '_', key)
+                processed[new_key] = val
+            return processed
+        return value
+
+
+class AdmetResult(BaseModel):
+    model_version: str
+    msg: str
+    data: Optional[AdmetInnerData] = None
+
+
+class AdmetRawResult(BaseModel):
+    smiles: str
+    admet_result: Optional[AdmetResult] = None
+
+
+description = """Detail decription for Admet result items:
         {
       MW: {
         label: 'MW',
@@ -509,128 +645,3 @@ class AdmetInnerData(BaseModel):
       },
     }
     """
-
-    ah_r: AdmetValueItem
-    ames: AdmetValueItem
-    aot_c_wym: AdmetValueItem
-    ar: AdmetValueItem
-    ar_lbd: AdmetValueItem
-    are: AdmetValueItem
-    aromatase: AdmetValueItem
-    atad5: AdmetValueItem
-    bbb_martins: AdmetValueItem
-    bcrp_dp: AdmetValueItem
-    bioavailability_ma: AdmetValueItem
-    bsep_aid: AdmetValueItem
-    caco2_wang: AdmetValueItem
-    carc: AdmetValueItem
-    carcinogenicity_mouse_td50: AdmetValueItem
-    carcinogenicity_rat: AdmetValueItem
-    carcinogenicity_rat_td50: AdmetValueItem
-    cl_microsome_human: AdmetValueItem
-    cl_microsome_mouse: AdmetValueItem
-    cl_microsome_rat: AdmetValueItem
-    cl_total_dog: AdmetValueItem
-    cl_total_human: AdmetValueItem
-    cl_total_monkey: AdmetValueItem
-    cl_total_rat: AdmetValueItem
-    clearance_hepatocyte_az: AdmetValueItem
-    clearance_microsome_az: AdmetValueItem
-    c_lr: AdmetValueItem
-    cyp2_c8_inhibition: AdmetValueItem
-    cyp2_c9_inhibition: AdmetValueItem
-    cyp2_c9_substrate_carbonmangels: AdmetValueItem
-    cyp2_c9_veith: AdmetValueItem
-    cyp2_d6_inhibition: AdmetValueItem
-    cyp2_d6_substrate_carbonmangels: AdmetValueItem
-    cyp2_d6_veith: AdmetValueItem
-    cyp3_a4_inhibition: AdmetValueItem
-    cyp3_a4_substrate_carbonmangels: AdmetValueItem
-    cyp3_a4_veith: AdmetValueItem
-    dili: AdmetValueItem
-    dog_fraction_unbound_plasma: AdmetValueItem
-    egan_rule: AdmetValueItem
-    er: AdmetValueItem
-    er_lbd: AdmetValueItem
-    eye_corrosion: AdmetValueItem
-    data_eye_corrosion: AdmetValueItem
-    eye_irritation: AdmetValueItem
-    flexibility: AdmetValueItem
-    ghose_rule: AdmetValueItem
-    gr: AdmetValueItem
-    half_life: AdmetValueItem
-    half_life_obach: AdmetValueItem
-    herg: AdmetValueItem
-    h_erg_1: AdmetValueItem
-    h_erg_10: AdmetValueItem
-    h_erg_30: AdmetValueItem
-    h_erg_binding: AdmetValueItem
-    hia: AdmetValueItem
-    hia2: AdmetValueItem
-    hia_c: AdmetValueItem
-    hia_hou: AdmetValueItem
-    hlm_chen: AdmetValueItem
-    hse: AdmetValueItem
-    human_fraction_unbound_plasma: AdmetValueItem
-    ld50_zhu: AdmetValueItem
-    lipinski_rule: AdmetValueItem
-    lipophilicity_astrazeneca: AdmetValueItem
-    log_d_p_h_74: AdmetValueItem
-    log_p: AdmetValueItem
-    max_ring: AdmetValueItem
-    micronucleus: AdmetValueItem
-    mitochondrial_toxicity: AdmetValueItem
-    mmp: AdmetValueItem
-    monkey_fraction_unbound_plasma: AdmetValueItem
-    mouse_carcinogenicity: AdmetValueItem
-    mw: AdmetValueItem
-    n_het: AdmetValueItem
-    nephrotoxicity: AdmetValueItem
-    neurotoxicity: AdmetValueItem
-    nha: AdmetValueItem
-    nhd: AdmetValueItem
-    n_rigid: AdmetValueItem
-    nring: AdmetValueItem
-    nrot: AdmetValueItem
-    n_stereo_centers: AdmetValueItem
-    oatp1_b1_aid: AdmetValueItem
-    oatp1_b3_aid: AdmetValueItem
-    oatp2_b1_aid: AdmetValueItem
-    oct1_aid: AdmetValueItem
-    oct2_kido: AdmetValueItem
-    ocular_toxicity: AdmetValueItem
-    p53: AdmetValueItem
-    papp_caco2: AdmetValueItem
-    pgp_broccatelli: AdmetValueItem
-    pgp_human: AdmetValueItem
-    ppbr_az: AdmetValueItem
-    rat_fraction_unbound_plasma: AdmetValueItem
-    reproductive_toxicity: AdmetValueItem
-    respiratory_toxicity: AdmetValueItem
-    rlm_chen: AdmetValueItem
-    skin_corrosion: AdmetValueItem
-    skin_irritation: AdmetValueItem
-    skin_sensitization: AdmetValueItem
-    solubility_aqsoldb: AdmetValueItem
-    thermo_log_saq: AdmetValueItem
-    total_charge: AdmetValueItem
-    tpsa: AdmetValueItem
-    tr: AdmetValueItem
-    ugts_substance_huang: AdmetValueItem
-    v_dss_dog: AdmetValueItem
-    v_dss_human: AdmetValueItem
-    vdss_lombardo: AdmetValueItem
-    v_dss_monkey: AdmetValueItem
-    v_dss_rat: AdmetValueItem
-    veber_rule: AdmetValueItem
-
-
-class AdmetResult(BaseModel):
-    model_version: str
-    msg: str
-    data: Optional[AdmetInnerData] = None
-
-
-class AdmetRawResult(BaseModel):
-    smiles: str
-    admet_result: Optional[AdmetResult] = None

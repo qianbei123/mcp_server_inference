@@ -4,8 +4,8 @@ from pydantic import BaseModel
 
 
 class InputPK(InputData):
-    dose: float  # mg/kg
-    route: Literal["p.o.", "i.v."]
+    dose: float = 1 # mg/kg
+    route: Literal["p.o.", "i.v."] = "p.o."
 
 class Curve(BaseModel):
     times:list[float] # hours
@@ -35,3 +35,14 @@ class ResponseData(BaseModel):
     dose: float
     route: Literal["i.v.", "p.o."]
     pk_result: PKResultRaw
+
+description = {
+    "Vd": "Volume of distribution",
+    "Cmax": "Maximum concentration reached in the blood after dosing",
+    "Tmax": "Time taken to reach the maximum concentration (C_max)",
+    "Auclast": "Area under the C-T curve with a final time of 24 h",
+    "Aucinf": "Area under the C-T curve extrapolated to infinity",
+    "Cl": "Clearance. In this case, the average clearance of a drug from the body",
+    "T1_2": "Half-life, the time it takes for the drug concentration to reduce by half",
+    "mrt": "Mean residence time, the average time the drug stays in the body",
+}
