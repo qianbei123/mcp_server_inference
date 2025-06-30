@@ -57,4 +57,4 @@ async def ToxScan_predict_tool(data: InputData) -> RES[ToxResult]:
 
 
 if __name__ == "__main__":
-    mcp.run(transport='sse',host="0.0.0.0",port=5001)
+    mcp.run(transport='sse',host="0.0.0.0",port=5003)
