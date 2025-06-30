@@ -58,7 +58,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: github.Dockerfile
+          file: Dockerfile
           push: true
           #  使用动态生成的日期作为标签的一部分，同时指定了私有registry的路径
           tags: |
