@@ -17,7 +17,8 @@ mcp = FastMCP("Demo 🚀")
 
 
 @mcp.tool(
-    name="ADMET predict", description="Predict the ADMET properties of a molecule"
+    name="ADMET_Service", 
+    description="Predict the ADMET properties of a molecule. Absorption, Distribution, Metabolism, Excretion and Toxicity Prediction for Molecules"
 )
 async def ADMET_predict_tool(data: InputData) -> RES[AdmetInnerData]:
     return await ADMET_predict(data)
@@ -32,8 +33,8 @@ async def admet_meta():
 
 
 @mcp.tool(
-    name="Pharmacokinetics predict",
-    description="Predict the Pharmacokinetics properties of a molecule",
+    name="Pharmacokinetics_Service",
+    description="Predict the Pharmacokinetics properties of a molecule. Pharmacokinetic Metabolism Curve Prediction, Prediction of Drug Concentration Changes over Time."
 )
 async def Pharmacokinetics_predict_tool(data: InputPK) -> RES[PKResult]:
     return await Pharmacokinetics_predict(data)
@@ -47,8 +48,8 @@ async def pk_meta():
     }
 
 @mcp.tool(
-    name="ToxScan predict",
-    description="Predict the ToxScan properties of a molecule",
+    name="ToxScan_predict",
+    description="Predict the ToxScan properties of a molecule. Safety Evaluation of Drugs, Chemicals or Environmental Pollutants.",
 )
 async def ToxScan_predict_tool(data: InputData) -> RES[ToxResult]:
     return await ToxScan_predict(data)
