@@ -37,16 +37,16 @@ jobs:
           DATE=$(date +'%Y%m%d')
           echo "DATE=$DATE" >> $GITHUB_ENV
 
-      # 添加步骤来根据分支名动态设置镜像名称前缀
-      - name: Set image prefix based on branch
-        id: image_prefix
-        run: |
-          if [[ $GITHUB_REF == refs/heads/main ]]; then
-            echo "IMAGE_PREFIX=main" >> $GITHUB_ENV
-          else
-            echo "::error::Unsupported branch, no image will be built for this branch."
-            exit 1
-          fi
+      # # 添加步骤来根据分支名动态设置镜像名称前缀
+      # - name: Set image prefix based on branch
+      #   id: image_prefix
+      #   run: |
+      #     if [[ $GITHUB_REF == refs/heads/main ]]; then
+      #       echo "IMAGE_PREFIX=main" >> $GITHUB_ENV
+      #     else
+      #       echo "::error::Unsupported branch, no image will be built for this branch."
+      #       exit 1
+      #     fi
 
       # 添加步骤来获取当前的短SHA
       - name: Get short SHA
@@ -62,5 +62,5 @@ jobs:
           push: true
           #  使用动态生成的日期作为标签的一部分，同时指定了私有registry的路径
           tags: |
-            dp-ve-registry-cn-beijing.cr.volces.com/dplc/mol_infer_mcp_server:${{ env.IMAGE_PREFIX }}-${{ env.DATE }}-${{ env.SHORT_SHA }}
+            dp-ve-registry-cn-beijing.cr.volces.com/dplc/mol_infer_mcp_server:${{ env.DATE }}-${{ env.SHORT_SHA }}
             dp-ve-registry-cn-beijing.cr.volces.com/dplc/mol_infer_mcp_server:latest
