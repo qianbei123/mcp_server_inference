@@ -11,7 +11,6 @@ RUN echo "Asia/Shanghai" > /etc/timezone
 COPY . /app
 RUN chmod +x /app/run.sh
 RUN chmod +x /app/run_gas_properties_service.sh
-RUN chmod +x /app/run_molecule_search_service.sh
 RUN chmod +x /app/run_pocket_disease_service.sh
 RUN pip install uv -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple
 RUN uv sync --locked
