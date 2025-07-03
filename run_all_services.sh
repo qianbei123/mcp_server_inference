@@ -9,7 +9,7 @@ chmod +x run_gas_properties_service.sh
 echo "启动所有服务..."
 
 # 启动口袋-分子-疾病服务
-echo "启动口袋-分子-疾病服务 (端口5004)..."
+echo "启动口袋-分子-疾病服务 (端口5006)..."
 ./run_pocket_disease_service.sh &
 
 # 启动分子搜索服务
@@ -17,13 +17,13 @@ echo "启动分子搜索服务 (端口5005)..."
 ./run_molecule_search_service.sh &
 
 # 启动气体特性预测服务
-echo "启动气体特性预测服务 (端口5006)..."
+echo "启动气体特性预测服务 (端口5004)..."
 ./run_gas_properties_service.sh &
 
 echo "所有服务已启动!"
-echo "- 口袋-分子-疾病服务运行在 http://0.0.0.0:5001"
-echo "- 分子搜索服务运行在 http://0.0.0.0:5002"
-echo "- 气体特性预测服务运行在 http://0.0.0.0:5003"
+echo "- 口袋-分子-疾病服务运行在 http://0.0.0.0:5006"
+echo "- 分子搜索服务运行在 http://0.0.0.0:5005"
+echo "- 气体特性预测服务运行在 http://0.0.0.0:5004"
 
 echo "日志文件位于:"
 echo "- /app/pocket_disease_service.log"
