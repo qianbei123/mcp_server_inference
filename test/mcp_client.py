@@ -40,21 +40,21 @@ async def main():
 
         
         # Execute operations
-        print("\n===== Testing Pocket_Molecule_Retrieval =====")
-        result = await client.call_tool("Pocket_Molecule_Retrieval", {"pocket_name": "1L5S", "k": 5})
-        print(result)
+        # print("\n===== Testing Pocket_Molecule_Retrieval =====")
+        # result = await client.call_tool("Pocket_Molecule_Retrieval", {"pocket_name": "1L5S", "k": 5})
+        # print(result)
         
-        print("\n===== Testing Molecule_Pocket_Retrieval =====")
-        result = await client.call_tool("Molecule_Pocket_Retrieval", {"smiles": "CN1C=NC2=C1C(=O)N(C(=O)N2C)C"})
-        print(result)
+        # print("\n===== Testing Molecule_Pocket_Retrieval =====")
+        # result = await client.call_tool("Molecule_Pocket_Retrieval", {"smiles": "CN1C=NC2=C1C(=O)N(C(=O)N2C)C"})
+        # print(result)
         
         # print("\n===== Testing Molecule_Search =====")
         # result = await client.call_tool("Molecule_Search", {"smiles": "CC(=O)OC1=CC=CC=C1C(=O)O", "k": 5})
         # print(result)
         
-        print("\n===== Testing Disease_Target_Retrieval =====")
-        result = await client.call_tool("Disease_Target_Retrieval", {"disease": "Anaemia, postpartum"})
-        print(result)
+        # print("\n===== Testing Disease_Target_Retrieval =====")
+        # result = await client.call_tool("Disease_Target_Retrieval", {"disease": "Anaemia, postpartum"})
+        # print(result)
         
         # print("\n===== Testing Gas_Properties_Prediction =====")
         # # 单个SMILES测试

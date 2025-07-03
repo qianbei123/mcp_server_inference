@@ -3,16 +3,18 @@ from tools.base import (
     retrieve_molecules_from_pocket,
     retrieve_pocket_from_smiles,
     retrieve_targets_from_disease,
+    search_by_smiles,
 )
 
 from structs.tool_structs import (
     PocketMoleculeRetrievalInput, PocketMoleculeRetrievalResponse,
     MoleculePocketRetrievalInput, MoleculePocketRetrievalResponse,
     DiseaseTargetRetrievalInput, DiseaseTargetRetrievalResponse,
+    MoleculeSearchInput, MoleculeSearchResponse,
 )
 from typing import Dict, Any, List, Union
 
-mcp = FastMCP("Pocket_Disease_Service")
+mcp = FastMCP("Pocket_Molecule_Disease_Service")
 
 
 @mcp.tool(
@@ -38,6 +40,14 @@ async def retrieve_pocket_from_smiles_tool(smiles: str, k: int = 10) -> Molecule
 async def retrieve_targets_from_disease_tool(disease: str) -> DiseaseTargetRetrievalResponse:
     input_data = DiseaseTargetRetrievalInput(disease=disease)
     return await retrieve_targets_from_disease(input_data)
+
+@mcp.tool(
+    name="Molecule_Search",
+    description="Search for similar molecules based on a given molecule's SMILES string."
+)
+async def search_by_smiles_tool(smiles: str, k: int = 10, filter_ion: bool = True) -> MoleculeSearchResponse:
+    input_data = MoleculeSearchInput(smiles=smiles, k=k, filter_ion=filter_ion)
+    return await search_by_smiles(input_data)
 
 
 if __name__ == "__main__":
